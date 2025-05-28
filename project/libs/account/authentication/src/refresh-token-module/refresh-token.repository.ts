@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { DeleteResult } from 'mongodb';
 
 import { BaseMongoRepository } from '@project/data-access';
 
@@ -17,10 +18,8 @@ export class RefreshTokenRepository extends BaseMongoRepository<RefreshTokenEnti
     super(entityFactory, blogUserModel);
   }
 
-  public async deleteByTokenId(tokenId: string) {
-    return this.model
-      .deleteOne({ tokenId })
-      .exec();
+  public async deleteByTokenId(tokenId: string): Promise<DeleteResult> {
+    return this.model.deleteOne({ tokenId }).exec();
   }
 
   public async findByTokenId(tokenId: string): Promise<RefreshTokenEntity | null> {
@@ -29,7 +28,6 @@ export class RefreshTokenRepository extends BaseMongoRepository<RefreshTokenEnti
   }
 
   public async deleteExpiredTokens(): Promise<void> {
-    this.model
-      .deleteMany({ expiresIn: { $lt: new Date() } })
+    this.model.deleteMany({ expiresIn: { $lt: new Date() } })
   }
 }
