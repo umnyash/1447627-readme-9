@@ -5,6 +5,7 @@ import { HttpClient } from './app.config';
 import { UsersController } from './users.controller';
 import { CheckAuthGuard } from './guards/check-auth.guard';
 import { BlogController } from './blog.controller';
+import { FeedController } from './feed.controller';
 import { CommentController } from './comment.controller';
 
 @Module({
@@ -17,6 +18,7 @@ import { CommentController } from './comment.controller';
   controllers: [
     UsersController,
     BlogController,
+    FeedController,
     CommentController
   ],
   providers: [CheckAuthGuard],
